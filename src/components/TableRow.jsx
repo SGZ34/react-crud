@@ -1,6 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-export function TableRow({ product, editProduct, deleteProduct }) {
+export function TableRow({ product, deleteProduct }) {
+  const navigate = useNavigate();
+  const handleDelete = (product) => {
+    if (confirm(`Desea borrar el producto ${product.name}?`)) {
+      deleteProduct(product);
+    }
+  };
   return (
     <tr>
       <td>{product.id}</td>
@@ -8,16 +15,14 @@ export function TableRow({ product, editProduct, deleteProduct }) {
       <td>{product.price}</td>
       <td>
         <button
-          type="button"
           className="btn btn-outline-warning mx-2"
-          onClick={() => editProduct(product)}
+          onClick={() => navigate("/product/" + product.id)}
         >
           Editar
         </button>
         <button
-          type="button"
           className="btn btn-outline-danger"
-          onClick={() => deleteProduct(product)}
+          onClick={() => handleDelete(product)}
         >
           Eliminar
         </button>
